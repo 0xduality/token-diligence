@@ -1,0 +1,19 @@
+{
+  "name": "foundry-template",
+  "description": "Foundry template for a smart contract",
+  "author": "0xduality",
+  "license": "Affero General Public License",
+  "version": "1.0.0",
+  "files": [
+      "src/**/*.sol"
+  ],
+  "scripts": {
+      "setup": "forge clean && forge build",
+      "update": "forge update",
+      "test": "forge clean && forge test",
+      "cov": "forge clean && forge coverage --report lcov && genhtml -o report lcov.info",
+      "snapshot": "forge clean && forge snapshot",
+      "gas-report": "forge clean && forge test --gas-report",
+      "deploy-renderer": ". `pwd`/.env && forge create src/Token.sol:Token --rpc-url=$RPC_URL --private-key=$DEPLOYER_KEY --verify"
+  }
+}
