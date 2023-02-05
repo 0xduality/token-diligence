@@ -1,13 +1,23 @@
-# Foundry Template • ![license](https://img.shields.io/github/license/0xduality/app?label=license) ![solidity](https://img.shields.io/badge/solidity-^0.8.16-lightgrey)
+# Token Diligence • ![license](https://img.shields.io/github/license/0xduality/app?label=license) ![solidity](https://img.shields.io/badge/solidity-^0.8.16-lightgrey)
 
+A contract that does due diligence for tokens and token pairs. 
+It can detect whether a token cannot be bought, has a tax on transfers, 
+cannot be sold, or otherwise behaves differently from a regular ERC20 token.
+
+A companion Python script `call_example.py` shows how to use an existing deployment
+of this contract on Avalanche.
 
 ## Getting Started
 
 Assuming you have [foundry](https://getfoundry.sh/) installed
 ```sh
-git clone --recursive https://github.com/0xduality/foundry-template
-cd foundry-template 
-forge test
+git clone --recursive https://github.com/0xduality/token-diligence
+cd token-diligence
+```
+Copy `.env.example` to `.env`. Then 
+``` 
+forge test -vv
+python call_example.py
 ```
 
 ## Blueprint
@@ -17,14 +27,14 @@ lib
 ├─ forge-std — https://github.com/foundry-rs/forge-std
 ├─ solbase — https://github.com/Sol-DAO/solbase
 src
-├─ Token — Simple ERC20 token contract 
+├─ Diligence — Main contract 
 test
-└─ Token.t — Tests
+└─ Diligence.t — Tests
 ```
 
 ## Deploying
 
-Create a .env file filling out the information in .env.example
+Fill out the rest of the entries in your `.env` file. Then
 
 ```bash
 yarn deploy
