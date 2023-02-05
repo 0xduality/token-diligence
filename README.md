@@ -1,11 +1,13 @@
 # Token Diligence • ![license](https://img.shields.io/github/license/0xduality/app?label=license) ![solidity](https://img.shields.io/badge/solidity-^0.8.16-lightgrey)
 
-A contract that does due diligence for tokens and token pairs. 
-It can detect whether a token cannot be bought, has a tax on transfers, 
-cannot be sold, or otherwise behaves differently from a regular ERC20 token.
+A contract that does due diligence for tokens and token pairs in decentralized exchanges
+that are Uniswap-V2 forks. It can detect whether a token cannot be bought, has a tax on 
+transfers, cannot be sold, or otherwise behaves differently from a regular ERC20 token.
 
 A companion Python script `call_example.py` shows how to use an existing deployment
-of this contract on Avalanche.
+of this contract on Avalanche. The basic idea is the contract owner transfers some gas tokens 
+to the contract once, then anyone can use the `eth_call` RPC with the owner's address
+in the `from` field.
 
 ## Getting Started
 
@@ -20,6 +22,17 @@ forge test -vv
 python call_example.py
 ```
 
+## Deploying
+
+Fill out the rest of the entries in your `.env` file. Then
+
+```bash
+yarn deploy
+```
+
+To deploy to a new chain you would need to edit the function `determineRouter` which returns the address of the dex router
+given the factory contract (which you can get by calling the `factory()` method on any liquidity pair).
+
 ## Blueprint
 
 ```ml
@@ -30,14 +43,6 @@ src
 ├─ Diligence — Main contract 
 test
 └─ Diligence.t — Tests
-```
-
-## Deploying
-
-Fill out the rest of the entries in your `.env` file. Then
-
-```bash
-yarn deploy
 ```
 
 ## License
