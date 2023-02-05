@@ -7,7 +7,8 @@ transfers, cannot be sold, or otherwise behaves differently from a regular ERC20
 A companion Python script `call_example.py` shows how to use an existing deployment
 of this contract on Avalanche. The basic idea is the contract owner transfers some gas tokens 
 to the contract once, then anyone can use the `eth_call` RPC with the owner's address
-in the `from` field.
+in the `from` field. A return value greater than 0 means the token does not behave well.
+A return value of 0 means the token is likely okay.
 
 ## Getting Started
 
