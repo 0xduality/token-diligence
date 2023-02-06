@@ -33,6 +33,8 @@ yarn deploy
 
 To deploy to a new chain you would need to edit the function `determineRouter` which returns the address of the dex router
 given the factory contract (which you can get by calling the `factory()` method on any liquidity pair).
+Furthermore, you would need to change the address for the wrapped gas token (WAVAX) to the
+appropriate one for the chain your are deploying to.
 
 ## Blueprint
 
