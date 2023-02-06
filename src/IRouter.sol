@@ -2,6 +2,8 @@
 pragma solidity ^0.8.17;
 interface IRouter {
 
+    function factory() external returns (address);
+
     // given an input amount of an asset and pair reserves, returns the maximum output amount of the other asset
     function getAmountOut(
         uint256 amountIn,

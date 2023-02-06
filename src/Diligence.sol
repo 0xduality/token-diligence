@@ -129,6 +129,18 @@ contract Diligence is Owned(tx.origin) {
 
     }
 
+    function swapAndCheck(address router, address token0, address token1) internal returns (uint256)
+    {
+        WETH(wavax).deposit{value: address(this).balance}();
+        ERC20(wavax).approve(router, ERC20(wavax).balanceOf(address(this)));
+        uint256 ret = swap(ERC20(wavax).balanceOf(address(this)), wavax, token1, router);
+        if (ret == type(uint256).max)
+            return 1;
+        ret = buyAndSell(token0, token1, ret, IRouter(router).factory());
+        WETH(wavax).withdraw(ERC20(wavax).balanceOf(address(this)));
+        return ret;
+    }
+
     function checkMarket(address market) public onlyOwner returns (uint256)
     {
         address factory = IUniswapV2Pair(market).factory();
@@ -151,28 +163,14 @@ contract Diligence is Owned(tx.origin) {
                 uint256 ret = checkToken(token1, factory);
                 if (ret > 0)
                     return ret;
-                WETH(wavax).deposit{value: address(this).balance}();
-                ERC20(wavax).approve(router, ERC20(wavax).balanceOf(address(this)));
-                ret = swap(ERC20(wavax).balanceOf(address(this)), wavax, token1, router);
-                if (ret == type(uint256).max)
-                    return 1;
-                ret = buyAndSell(token0, token1, ret, factory);
-                WETH(wavax).withdraw(ERC20(wavax).balanceOf(address(this)));
-                return ret;
+                return swapAndCheck(router, token0, token1);
             }
             else
             {
-                uint256 ret = checkToken(token1, factory);
+                uint256 ret = checkToken(token0, factory);
                 if (ret > 0)
                     return ret;
-                WETH(wavax).deposit{value: address(this).balance}();
-                ERC20(wavax).approve(router, ERC20(wavax).balanceOf(address(this)));
-                ret = swap(ERC20(wavax).balanceOf(address(this)), wavax, token0, router);
-                if (ret == type(uint256).max)
-                    return 1;
-                ret = buyAndSell(token1, token0, ret, factory);
-                WETH(wavax).withdraw(ERC20(wavax).balanceOf(address(this)));
-                return ret;
+                return swapAndCheck(router, token1, token0);
             }
         }
     }
