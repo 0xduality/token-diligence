@@ -147,7 +147,7 @@ contract Diligence is Owned(tx.origin) {
         address router = determineRouterFromFactory(factory);
         address token0 = IUniswapV2Pair(market).token0();
         address token1 = IUniswapV2Pair(market).token1();
-        if ( token0 == wavax)
+        if (token0 == wavax)
         {
             return checkToken(token1, factory);
         }

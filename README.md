@@ -10,6 +10,10 @@ to the contract once, then anyone can use the `eth_call` RPC with the owner's ad
 in the `from` field. A return value greater than 0 means the token does not behave well.
 A return value of 0 means the token is likely okay.
 
+The code assumes that tokens are either paired with the gas token (i.e. TOKEN/WAVAX exists) 
+or they are paired with a token that is paired with the gas token (e.g. TOKEN/USDC and USDC/WAVAX exist). 
+At the time of this writing this is true for all tokens on the chains I care about.
+
 ## Getting Started
 
 Assuming you have [foundry](https://getfoundry.sh/) installed
